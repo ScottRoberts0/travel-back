@@ -10,7 +10,7 @@ const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
 
-db.query('SELECT * FROM people;')
+db.query('SELECT * FROM users;')
 .then(data => {
   console.log(data.rows);
 })
