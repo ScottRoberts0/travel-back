@@ -1,13 +1,18 @@
+require('dotenv').config();
 const fs = require("fs");
 const path = require("path");
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const cors = require("cors");
 const app = express();
 const PORT = 8080;
-require('dotenv').config();
+
+const users = require("./routes/users");
+const trips = require("./routes/trips");
+const cities = require("./routes/cities");
+const tripCities = require("./routes/tripcities");
+const flights = require("./routes/flights");
 
 const read = function(file) {
   return new Promise((resolve, reject) => {
@@ -35,6 +40,11 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(express.static('public'));
+app.use("/users", users(db));
+app.use("/cities", cities(db));
+app.use("/trips", trips(db));
+app.use("/tripcities", tripCities(db));
+app.use("/flights", flights(db));
 
 if (process.env.DB_HOST) {
   Promise.all([
@@ -43,7 +53,6 @@ if (process.env.DB_HOST) {
   ])
     .then(([create, seed]) => {
       app.get("/database/reset", (request, response) => {
-        console.log("in app.get", typeof create);
         db.query(create)
           .then(() => db.query(seed))
           .then(() => {
