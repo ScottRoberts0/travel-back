@@ -39,7 +39,6 @@ db.connect();
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(express.static('public'));
 app.use("/users", users(db));
 app.use("/cities", cities(db));
 app.use("/trips", trips(db));
@@ -65,12 +64,6 @@ if (process.env.DB_HOST) {
       console.log(`Error setting up the reset route: ${error}`);
     });
 }
-
-// Sample GET route
-app.get('/api/data', (req, res) => res.json({
-  message: "Seems to work!",
-}));
-
 
 app.get('/', (req, res) => res.json({
   message: "Seems to work!",
