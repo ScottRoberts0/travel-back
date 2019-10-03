@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const fs = require("fs");
 const path = require("path");
 
@@ -8,12 +7,6 @@ const helmet = require("helmet");
 const cors = require("cors");
 const app = express();
 const PORT = 8080;
-=======
-const Express = require('express');
-const App = Express();
-const BodyParser = require('body-parser');
-const PORT = process.env.PORT || 8080;
->>>>>>> 8f1d8dd97ad0c56c0f9bb0764dd178c4d1f51d10
 require('dotenv').config();
 
 const read = function(file) {
@@ -37,13 +30,6 @@ const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
 
-<<<<<<< HEAD
-=======
-db.query('SELECT * FROM users;')
-.then(data => {
-  console.log(data.rows);
-})
->>>>>>> 8f1d8dd97ad0c56c0f9bb0764dd178c4d1f51d10
 // Express Configuration
 app.use(cors());
 app.use(helmet());
