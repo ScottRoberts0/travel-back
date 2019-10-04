@@ -1,26 +1,67 @@
 const router = require("express").Router();
+const bcrypt  = require("bcrypt");
 
 module.exports = db => {
   router.get("/", (req,res) => {
-    db.query(`SELECT * FROM users;`).then(({rows: users}) => {
-      res.json(
-        users
-      )
-    })
+    db.query(`
+    SELECT * 
+    FROM users`)
+    .then(data => {res.json({
+      data: data.rows
+    })});
+    // .then(user => {
+    //   if (user.length) {
+    //     res.redirect('/');
+    //   } else {
+    //     const templateVars = {
+    //       data: user,
+    //       error: false
+    //   }
+    //   res.render('register', templateVars);
+    //   }
+    // });
   });
   router.post("/register", (req, res) => {
     const { username, city, password, email } = req.body;
-    db.query(`INSERT INTO users (username, city, password, email)
-    VALUES ($1, $2, $3, $4)`, [username, city, password, email])
-    .then(() => "hello");
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    const usernameCheckQueryParams = [username];
+    const usernameCheckQueryString = `
+    SELECT *
+    FROM users
+    WHERE username = $1;
+    `;
+
+    db.query(usernameCheckQueryString, usernameCheckQueryParams)
+    .then(data => data.rows)
+    .then(user => {
+      if (!user.length) {
+        const regQueryString = `INSERT INTO users (username, city, password, email)
+        VALUES ($1, $2, $3, $4)`;
+        const regQueryParams = [username, city, hashedPassword, email]
+      db.query(regQueryString, regQueryParams)
+      }});
   });
 
   router.post("/login", (req, res) => {
-    let username = req.body.username
-    let password = req.body.password
-    
-    db.query(`SELECT * FROM users 
-    WHERE username = $1`, [username])
-  })
+    const { email, password } = req.body;
+    const queryParams = [email]
+    const queryString = `
+    SELECT *
+    FROM users 
+    WHERE email = $1`;
+
+    db.query(queryString, queryParams)
+    .then(res => res.rows)
+    .then(user => {
+      if (user.length) {
+        if (bcrypt.compareSync(password, user[0]['password'])){
+          res.send(
+            JSON.stringify({
+              user
+            })
+          )
+        }}
+    });
+  });
   return router;
 };
