@@ -1,31 +1,19 @@
 const router = require("express").Router();
 
 module.exports = db => {
-  router.get("/:tripId", (req, res) => {
-    const tripId = req.params.tripId;
-    db.query(`SELECT * FROM trips WHERE id = $1`, [tripId])
+  router.get("/:userId", (req, res) => {
+    const userId = req.params.userId;
+    db.query(`SELECT * FROM trips WHERE user_id = $1`, [userId])
     .then(data => {
       if (!data.rows[0]) {
         res.send("Not Found");
       } else {
-        const trip = data.rows[0];
-
-        db.query(`SELECT * FROM cities WHERE trip_id = $1`, [tripId]).then(
-          data => {
-            trip.cities = data.rows;
-
-            db.query(`SELECT * FROM flights WHERE trip_id = $1`, [tripId]).then(
-              data => {
-                trip.flights = data.rows;
-                res.json(trip);
-              }
-            );
-          }
-        );
+        res.send(data.rows);
       }
-    })
+     })
     .catch(error => res.send("Not Found"));
   });
 
   return router;
 };
+
