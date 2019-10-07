@@ -42,7 +42,6 @@ app.use(bodyParser.json());
 app.use("/users", users(db));
 app.use("/cities", cities(db));
 app.use("/trips", trips(db));
-app.use("/tripcities", tripCities(db));
 app.use("/flights", flights(db));
 
 if (process.env.DB_HOST) {
@@ -68,6 +67,7 @@ if (process.env.DB_HOST) {
 app.get('/', (req, res) => res.json({
   message: "Seems to work!",
 }));
+
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
