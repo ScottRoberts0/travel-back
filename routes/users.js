@@ -47,6 +47,8 @@ module.exports = db => {
             })
           )
       })
+      } else {
+        res.send("Username already exists");
       }});
   });
 
@@ -68,7 +70,12 @@ module.exports = db => {
               user
             })
           )
-        }}
+        } else {
+          res.send("incorrect password");
+        }
+      } else {
+        res.send("invalid email");
+      }
     });
   });
   return router;
