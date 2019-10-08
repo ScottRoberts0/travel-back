@@ -45,7 +45,7 @@ app.use("/itineraries", itineraries(db));
 app.use("/flights", flights(db));
 app.use("/trips", trips(db))
 
-if (process.env.DB_HOST) {
+
   Promise.all([
     read(`./db/schema/create.sql`),
     read(`./db/schema/development.sql`)
@@ -63,7 +63,7 @@ if (process.env.DB_HOST) {
     .catch(error => {
       console.log(`Error setting up the reset route: ${error}`);
     });
-}
+
 
 app.get('/', (req, res) => res.json({
   message: "Seems to work!",
