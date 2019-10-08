@@ -15,6 +15,7 @@ CREATE TABLE users (
 CREATE TABLE trips (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  passengers SMALLINT NOT NULL,
   name VARCHAR(255),
   password VARCHAR(255)
 );
@@ -27,8 +28,8 @@ CREATE TABLE cities (
   code VARCHAR(255) NOT NULL,
   lat DECIMAL(10,6) NOT NULL,
   lng DECIMAL(10,6) NOT NULL,
-  departure_date DATE NOT NULL,
-  img VARCHAR(255)
+  departure_date DATE,
+  img VARCHAR(2000)
 );
 
 CREATE TABLE flights (
@@ -37,6 +38,7 @@ CREATE TABLE flights (
   airline VARCHAR(255) NOT NULL,
   price DECIMAL(12,2) NOT NULL,
   departure_location VARCHAR(255) NOT NULL,
-  arrival_location VARCHAR(255) NOT NULL
+  arrival_location VARCHAR(255) NOT NULL,
+  routing_iden VARCHAR(2000) NOT NULL
 );
 
