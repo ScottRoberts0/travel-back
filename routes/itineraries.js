@@ -13,10 +13,22 @@ module.exports = db => {
         db.query(`SELECT * FROM cities WHERE trip_id = $1`, [tripId]).then(
           data => {
             trip.cities = data.rows;
+            
+            
 
             db.query(`SELECT * FROM flights WHERE trip_id = $1`, [tripId]).then(
               data => {
-                trip.flights = data.rows;
+                
+                for(let i = 0; i < trip.cities.length; i++){
+                  if(data.rows[i]){
+                    trip.cities[0].flight = data.rows[i]
+
+                  }
+
+
+                }
+                
+              
                 res.json(trip);
               }
             );
