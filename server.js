@@ -11,7 +11,7 @@ const PORT = 8080;
 const users = require("./routes/users");
 const trips = require("./routes/trips");
 const cities = require("./routes/cities");
-const tripCities = require("./routes/tripcities");
+const itineraries = require("./routes/itineraries");
 const flights = require("./routes/flights");
 
 const read = function(file) {
@@ -41,9 +41,9 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use("/users", users(db));
 app.use("/cities", cities(db));
-app.use("/trips", trips(db));
-app.use("/tripcities", tripCities(db));
+app.use("/itineraries", itineraries(db));
 app.use("/flights", flights(db));
+app.use("/trips", trips(db))
 
 if (process.env.DB_HOST) {
   Promise.all([
@@ -68,6 +68,7 @@ if (process.env.DB_HOST) {
 app.get('/', (req, res) => res.json({
   message: "Seems to work!",
 }));
+
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
