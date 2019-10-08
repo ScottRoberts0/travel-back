@@ -14,6 +14,19 @@ module.exports = db => {
     .catch(error => res.send("Not Found"));
   });
 
+  router.post("/trip", (req, res) => {
+    const { cityInformation, flightInformation } = req.body;
+    const userId = ""
+    console.log("cityInformation", cityInformation);
+    console.log("flightInformation", flightInformation);
+    let testKeys = Object.keys(flightInformation);
+    let firstFlight = flightInformation[testKeys[0]];
+    let bookingUrl = firstFlight.bookingUrl;
+    let bookingUrlKeys = Object.keys(bookingUrl);
+    let firstBookingUrl = bookingUrl[bookingUrlKeys[0]];
+    console.log("firstBookingUrl", firstBookingUrl);
+    
+  });
   return router;
 };
 
