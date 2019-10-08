@@ -36,7 +36,7 @@ module.exports = db => {
     .then(user => {
       if (!user.length) {
         const regQueryString = `INSERT INTO users (username, city, password, email)
-        VALUES ($1, $2, $3, $4) RETURNING username`;
+        VALUES ($1, $2, $3, $4) RETURNING username, id`;
         const regQueryParams = [username, city, hashedPassword, email]
       db.query(regQueryString, regQueryParams)
       .then(res => res.rows)
