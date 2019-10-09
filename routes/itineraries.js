@@ -10,13 +10,13 @@ module.exports = db => {
       } else {
         const trip = data.rows[0];
 
-        db.query(`SELECT * FROM cities WHERE trip_id = $1`, [tripId]).then(
+        db.query(`SELECT * FROM cities WHERE trip_id = $1 ORDER BY order_number ASC`, [tripId]).then(
           data => {
             trip.cities = data.rows;
             
             
 
-            db.query(`SELECT * FROM flights WHERE trip_id = $1`, [tripId]).then(
+            db.query(`SELECT * FROM flights WHERE trip_id = $1 ORDER BY order_number ASC`, [tripId]).then(
               data => {
                 
                 for(let i = 0; i < trip.cities.length; i++){
