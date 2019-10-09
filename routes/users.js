@@ -48,7 +48,7 @@ module.exports = db => {
           )
       })
       } else {
-        res.send("Username already exists");
+        res.send("Email already exists");
       }});
   });
 
