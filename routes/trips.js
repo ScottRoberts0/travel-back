@@ -15,7 +15,7 @@ module.exports = db => {
   });
 
   router.post("/trip", (req, res) => {
-    const { cityInformation, flightInformation, userId, passengers } = req.body;
+    const { cityInformation, flightInformation, userId, passengers, url } = req.body;
     let testKeys = Object.keys(flightInformation);
     let firstFlight = flightInformation[testKeys[0]];
     let bookingUrl = firstFlight.booking_urls;
@@ -46,8 +46,8 @@ module.exports = db => {
           let bookingUrl = flight.booking_urls;
           let bookingUrlKeys = Object.keys(bookingUrl);
           let firstBookingUrl = bookingUrl[bookingUrlKeys[0]];
-          let newFlightString = `INSERT INTO flights(trip_id, airline, price, departure_location, arrival_location, routing_iden) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
-          let newFlightParams = [trip_id, firstBookingUrl.name , flight.unrounded_price, cityInformation[i].cityCode, cityInformation[i+1].cityCode, flight.routing_idens[0]];
+          let newFlightString = `INSERT INTO flights(trip_id, airline, price, departure_location, arrival_location, url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+          let newFlightParams = [trip_id, firstBookingUrl.name , flight.unrounded_price, cityInformation[i].cityCode, cityInformation[i+1].cityCode, url[i]];
           db.query(newFlightString, newFlightParams)
           .then((flightData) => {
             console.log(flightData);
