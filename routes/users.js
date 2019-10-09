@@ -24,11 +24,11 @@ module.exports = db => {
   router.post("/register", (req, res) => {
     const { username, city, password, email } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 10);
-    const usernameCheckQueryParams = [username];
+    const usernameCheckQueryParams = [email];
     const usernameCheckQueryString = `
     SELECT *
     FROM users
-    WHERE username = $1;
+    WHERE email = $1;
     `;
 
     db.query(usernameCheckQueryString, usernameCheckQueryParams)
