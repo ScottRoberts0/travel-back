@@ -39,6 +39,6 @@ CREATE TABLE flights (
   price DECIMAL(12,2) NOT NULL,
   departure_location VARCHAR(255) NOT NULL,
   arrival_location VARCHAR(255) NOT NULL,
-  routing_iden VARCHAR(2000) NOT NULL
+  url VARCHAR(2000) NOT NULL
 );
 
