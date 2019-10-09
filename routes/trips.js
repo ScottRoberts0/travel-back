@@ -48,7 +48,7 @@ module.exports = db => {
           let bookingUrl = flight.booking_urls;
           let bookingUrlKeys = Object.keys(bookingUrl);
           let firstBookingUrl = bookingUrl[bookingUrlKeys[0]];
-          let newFlightString = `INSERT INTO flights(trip_id, order_number, airline, price, departure_location, arrival_location, url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+          let newFlightString = `INSERT INTO flights(trip_id, order_number, airline, price, departure_location, arrival_location, url) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
           let newFlightParams = [trip_id, i+1, firstBookingUrl.name, flight.unrounded_price, cityInformation[i].cityCode, cityInformation[i+1].cityCode, url[i]];
           db.query(newFlightString, newFlightParams)
           .then((flightData) => {
