@@ -71,7 +71,9 @@ module.exports = db => {
             })
           )
         } else {
+          console.log("hello1");
           res.send("incorrect password");
+          console.log("hello");
         }
       } else {
         res.send("invalid email");
