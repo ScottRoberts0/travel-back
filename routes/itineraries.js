@@ -21,7 +21,7 @@ module.exports = db => {
                 
                 for(let i = 0; i < trip.cities.length; i++){
                   if(data.rows[i]){
-                    trip.cities[0].flight = data.rows[i]
+                    trip.cities[i].flight = data.rows[i]
 
                   }
 

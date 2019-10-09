@@ -53,6 +53,7 @@ module.exports = db => {
           db.query(newFlightString, newFlightParams)
           .then((flightData) => {
             console.log(flightData);
+            res.send(trip_id)
           });
         }
 
